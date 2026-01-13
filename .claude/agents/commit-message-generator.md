@@ -4,6 +4,11 @@ description: This agent is for specific slash commands, don't use it directly.
 tools:
 model: haiku
 color: green
+hooks:
+  Stop:
+    - hooks:
+        - type: command
+          command: "jq -r '.agent_transcript_path' | xargs jq -rs 'map(select(.type == \"assistant\")) | .[-1].message.content[0].text' | xargs -I {} git commit -e -m \"{}\""
 ---
 
 You are an expert in git best practices and conventional commit message formatting. Your sole purpose is to generate clear, concise, and effective git commit messages.
