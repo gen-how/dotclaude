@@ -1,12 +1,12 @@
 ---
-name: commit-message-generator
-description: This agent is for specific slash commands, don't use it directly.
+name: commit-hook
+description: This agent is for /commit commands, don't use it directly.
 tools:
 hooks:
-  Stop:
+  SubagentStop:
     - hooks:
         - type: command
-          command: "sh -c \"jq -r '.agent_transcript_path' | xargs jq -rs 'map(select(.type == \\\"assistant\\\")) | .[-1].message.content[0].text' | git commit -e -F -\""
+          command: "python3 $HOME/.claude/user-scripts/get_commit_msg.py | git commit -e -F -"
           timeout: 600
 ---
 
